@@ -117,22 +117,18 @@ class Recrutement(models.Model):
 class Candidature(models.Model):
     prenom = models.CharField(max_length=50)
     nom = models.CharField(max_length=50)
-    date_naissance = models.DateField(default='2000-01-01')  # Valeur par défaut statique
+    date_naissance = models.DateField(default='2000-01-01')  # Valeur par défaut
     genre = models.CharField(max_length=10, default='Non spécifié')  # Valeur par défaut
     email = models.EmailField()
     telephone = models.CharField(max_length=15)
     niveau = models.CharField(max_length=100)
     poste = models.CharField(max_length=100)
     cv = models.FileField(upload_to='uploads/cv/')
-    motivation = models.FileField(upload_to='uploads/motivation/')
-   
+    motivation = models.FileField(upload_to='uploads/motivation/', default='uploads/motivation/default_motivation.pdf')  # Exemple de valeur par défaut
+    date_soumission = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.prenom} {self.nom} - {self.poste}"
-
-
-    
-
 
 class Evaluation(models.Model):
     employe = models.ForeignKey(Employe, on_delete=models.CASCADE, related_name="evaluations")
