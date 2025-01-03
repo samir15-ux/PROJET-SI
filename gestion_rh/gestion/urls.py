@@ -9,7 +9,7 @@ urlpatterns = [
     path('register/', inscription, name='register'),
     path('dashboard/', views.dashboard, name='dashboard'),
     path('', views.index, name='index'),
-    path('postuler/', views.postuler, name='postuler'),
+    
     path ( 'gestion_tables' ,gestion_tables, name='gestion_tables'),
     #  chemins similaires pour employe
     path('employes/', views.gestion_employes, name='gestion_employes'),
@@ -40,11 +40,7 @@ urlpatterns = [
     path('contrats/ajouter/', views.ajouter_contrat, name='ajouter_contrat'),
     path('contrats/<int:pk>/modifier/', views.modifier_contrat, name='modifier_contrat'),
     path('contrats/<int:pk>/supprimer/', views.supprimer_contrat, name='supprimer_contrat'),
-    #  chemins similaires pour recrutements
-    path('recrutements/', views.gestion_recrutements, name='gestion_recrutements'),
-    path('recrutements/ajouter/', views.ajouter_recrutement, name='ajouter_recrutement'),
-    path('recrutements/<int:pk>/modifier/', views.modifier_recrutement, name='modifier_recrutement'),
-    path('recrutements/<int:pk>/supprimer/', views.supprimer_recrutement, name='supprimer_recrutement'),
+    
 
       # Gestion_personnel
     path('personnel/', views.Gestion_personnel, name='Gestion_personnel'),
@@ -52,8 +48,3 @@ urlpatterns = [
     path('personnel/<int:pk>/ajouter_evaluation/', views.ajouter_evaluation, name='ajouter_evaluation'),
 
 ]
-from django.conf import settings
-from django.conf.urls.static import static
-urlpatterns = [
-    path('postuler/', views.postuler, name='postuler'),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

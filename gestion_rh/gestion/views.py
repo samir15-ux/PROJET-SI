@@ -53,36 +53,6 @@ def index(request):
 def dashboard(request):
     return render(request,'dashboard.html')
 
-def postuler(request):
-    if request.method == "POST":
-        prenom = request.POST['prenom']
-        nom = request.POST['nom']
-        date_naissance = request.POST['date_naissance']
-        genre = request.POST['genre']
-        email = request.POST['email']
-        telephone = request.POST['telephone']
-        niveau = request.POST['niveau']
-        poste = request.POST['poste']
-        cv = request.FILES['cv']
-        motivation = request.FILES['motivation']
-
-        # Sauvegarder les données dans la base
-        candidature = Candidature(
-            prenom=prenom,
-            nom=nom,
-            date_naissance=date_naissance,
-            genre=genre,
-            email=email,
-            telephone=telephone,
-            niveau=niveau,
-            poste=poste,
-            cv=cv,
-            motivation=motivation
-        )
-        candidature.save()
-
-        return HttpResponse("Candidature soumise avec succès !")
-    return render(request, 'postuler.html')
 
 def gestion_tables(request):
     employes = Employe.objects.all()

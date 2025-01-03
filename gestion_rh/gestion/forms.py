@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import  Employe, Evaluation,  Service, Conge, Contrat, Salaire, Recrutement, Candidature, SoldeConge
+from .models import  Employe, Evaluation,  Service, Conge, Contrat, Salaire, Recrutement, SoldeConge
 
 class UserCreationForm (forms.ModelForm):
     password1 = forms.CharField(label='Mot de passe', widget=forms.PasswordInput)
@@ -67,9 +67,6 @@ class RecrutementForm(forms.ModelForm):
         model = Recrutement
         fields = '__all__'
 
-class CandidatureForm(forms.ModelForm):
-    class Meta:
-        model = Candidature
-        fields = ['nom', 'prenom', 'email', 'cv']  # Retirez "recrutement" et "etat" si absents
+
 
 

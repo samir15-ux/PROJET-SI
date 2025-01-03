@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib import admin
-from .models import Employe, Service, Conge, Salaire, Contrat, Recrutement, Candidature, Evaluation, SoldeConge
+from .models import Employe, Service, Conge, Salaire, Contrat, Recrutement, Evaluation, SoldeConge
 
 # Register your models here.
 
@@ -32,9 +32,7 @@ class RecrutementAdmin(admin.ModelAdmin):
     list_display = ('poste', 'date_publication', 'date_limite')
     search_fields = ('poste',)
 
-class CandidatureAdmin(admin.ModelAdmin):
-    list_display = ('prenom', 'nom', 'poste')
-    search_fields = ('prenom', 'nom', 'poste', 'email')
+
 
 class EvaluationAdmin(admin.ModelAdmin):
     list_display = ('employe', 'date', 'note', 'commentaire')
@@ -52,7 +50,6 @@ admin.site.register(Conge, CongeAdmin)
 admin.site.register(Salaire, SalaireAdmin)
 admin.site.register(Contrat, ContratAdmin)
 admin.site.register(Recrutement, RecrutementAdmin)
-admin.site.register(Candidature, CandidatureAdmin)
 admin.site.register(Evaluation, EvaluationAdmin)
 @admin.register(SoldeConge)
 class SoldeCongeAdmin(admin.ModelAdmin):
