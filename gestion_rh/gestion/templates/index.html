@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RHPLUS</title>
+    
+</head>
+<body>
+    <header class="header">
+        <div class="logo">RHPLUS</div>
+        <nav>
+            <ul>
+                <li><a href="#">Accueil</a></li>
+                <li><a href="#">Zone de candidature</a></li>
+                <li><a href="{% url 'register' %}">S'inscrire</a></li>
+                <li><a href="{% url 'login' %}">Connexion</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="intro">
+            <h1>RHPLUS?</h1>
+            <p>
+                Est un espace qui met en relation les employés, les candidats et l'entreprise...
+            </p>
+            <p>
+                Si vous êtes à la recherche d'un emploi, vous pouvez postuler auprès de notre entreprise en accédant à ce lien ↓
+            </p>
+            <a href="#" class="button">Postuler »</a>
+        </div>
+        <div class="image-container">
+            <img src="/static/images/back1.jpg" alt="Handshake">
+        </div>
+    </main>
+</body>
+</html>
+<style>
+  /* Global styles */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Header styles */
+.header {
+    background-color: #000;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e74c3c; /* RHPLUS en rouge */
+}
+
+.header nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.header nav ul li {
+    margin: 0 15px;
+}
+
+.header nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: normal;
+    font-size: 16px;
+}
+
+.header nav ul li a:hover {
+    text-decoration: underline;
+}
+
+/* Main content styles */
+.main-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 40px 80px;
+}
+
+.intro {
+    max-width: 50%;
+}
+
+.intro h1 {
+    font-size: 48px;
+    color: #e74c3c;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.intro p {
+    font-size: 18px;
+    margin: 20px 0;
+    line-height: 1.6;
+    color: #555;
+}
+
+.button {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #e74c3c;
+}
+
+/* Image container */
+.image-container {
+    max-width: 45%;
+}
+
+.image-container img {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+
+</style>

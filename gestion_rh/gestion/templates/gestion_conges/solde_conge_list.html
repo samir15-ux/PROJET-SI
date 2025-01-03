@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Liste des Soldes de Congés</title>
+</head>
+<body>
+    <h1>Liste des Soldes de Congés</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Employé</th>
+                <th>Solde Annuel</th>
+                <th>Solde Maladie</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for solde in soldes %}
+            <tr>
+                <td>{{ solde.employe.nom }} {{ solde.employe.prenom }}</td>
+                <td>{{ solde.solde_annuel }}</td>
+                <td>{{ solde.solde_maladie }}</td>
+                <td>
+                    <a href="{% url 'solde_conge_update' solde.employe.id %}">Modifier</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

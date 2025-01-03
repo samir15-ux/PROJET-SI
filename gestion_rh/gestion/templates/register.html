@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription Étudiant</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        /* Votre CSS original */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600;700&family=Peralta&family=Poppins:ital,wght@0,300;0,400;0,500;0,700;1,400&family=Roboto&family=Ruda:wght@500&display=swap');
+
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-size: 48px;
+            color: #285DC2;
+            font-weight: 400;
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            margin: 30px;
+        }
+
+        .signup {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-evenly;
+            border: 2px solid #000;
+            border-radius: 13px;
+            max-width: 50vw;
+            width: 80%;
+            margin-bottom: 30px;
+        }
+
+        .signup .droite {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 70vh;
+            margin: 10px;
+        }
+
+        .signup .droite .info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+            width: 400px;
+        }
+
+        .signup .droite .info label {
+            font-size: 15px;
+            font-weight: 500;
+            color: #1c1e21;
+        }
+
+        .signup .droite .info input {
+            width: 400px;
+            height: 40px;
+            border: 2px solid #000;
+            border-radius: 5px;
+            padding: 7px;
+            background-color: #fefefe;
+        }
+
+        .droite h2 {
+            font-family: 'poppins', sans-serif;
+            font-size: 24px;
+            color: #285DC2;
+            margin: 10px;
+        }
+
+        .droite button {
+            width: 400px;
+            height: 40px;
+            border: none;
+            border-radius: 5px;
+            padding: 7px;
+            margin: 20px;
+            font-size: 17px;
+            color: #fff;
+            background: linear-gradient(205.17deg, #418cd1 10.93%, #9c41d1 116.08%);
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+
+        .droite button:active {
+            color: rgba(45, 143, 233, 0.94);
+            background-color: #fff;
+            border: 2px solid rgba(45, 143, 233, 0.94);
+        }
+
+        .droite a {
+            text-decoration: none;
+            color: #2D8FE9;
+        }
+
+        .droite a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f2f5;
+            position: static;
+            width: 100%;
+            bottom: 0;
+            margin: 0;
+        }
+
+        footer p {
+            padding: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Gestion RH</h1>
+    <form method="post" class="signup">
+        {% csrf_token %}
+        <div class="droite">
+            <h2>S'inscrire</h2>
+
+            {% if form.errors %}
+            <div class="error">
+                {{ form.errors }}
+            </div>
+            {% endif %}
+
+            <div class="info">
+                <label for="id_nom">Nom</label>
+                <input type="text" name="first_name" id="id_nom" placeholder="Nom" required>
+            </div>
+            <div class="info">
+                <label for="id_prenom">Prénom</label>
+                <input type="text" name="last_name" id="id_prenom" placeholder="Prénom" required>
+            </div>
+            <div class="info">
+                <label for="id_email">Adresse email</label>
+                <input type="email" name="email" id="id_email" placeholder="Email" required>
+            </div>
+            <div class="info">
+                <label for="id_username">Nom d'utilisateur</label>
+                <input type="text" name="username" id="id_username" placeholder="Nom d'utilisateur" required>
+            </div>
+            <div class="info">
+                <label for="id_password1">Mot de passe</label>
+                <input type="password" name="password1" id="id_password1" placeholder="Mot de passe" required>
+            </div>
+            <div class="info">
+                <label for="id_password2">Confirmer mot de passe</label>
+                <input type="password" name="password2" id="id_password2" placeholder="Confirmer mot de passe" required>
+            </div>
+
+            <button type="submit">S'inscrire</button>
+            <a href="{% url 'login' %}" class="ca">Vous avez déjà un compte ?</a>
+        </div>
+    </form>
+</body>
+
+<footer>
+    <p>© 2024 Gestion RH. Tous droits réservés.</p>
+</footer>
+
+</html>

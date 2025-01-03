@@ -1,0 +1,204 @@
+{% extends 'base.html' %}
+
+{% block title %}Gestion des Tables{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="page-title">Gestion des Tables</h2>
+    
+    <!-- Navigation entre les tables -->
+    <div class="table-navigation">
+        <a href="{% url 'gestion_employes' %}" class="table-link">Employé</a>
+        <a href="{% url 'gestion_services' %}" class="table-link">Service</a>
+        <a href="{% url 'gestion_conges' %}" class="table-link">Congé</a>
+        <a href="{% url 'gestion_contrats' %}" class="table-link">Contrat</a>
+        <a href="{% url 'gestion_salaires' %}" class="table-link">Salaire</a>
+        <a href="{% url 'gestion_recrutements' %}" class="table-link">Recrutement</a>
+    </div>
+
+    <p class="par">Sélectionnez une table pour gérer les données correspondantes.</p>
+</div>
+<style>
+/* Global Settings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f9f9f9;
+    color: #333;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fcfcfc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.par {
+    text-align: center;
+}
+
+/* Page Title */
+.page-title {
+    font-size: 2.5rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 600;
+}
+
+/* Table Navigation */
+.table-navigation {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+/* Table Link Styles */
+.table-link {
+    display: inline-block;
+    padding: 12px 30px;
+    background-color: #ffffff;
+    border: 2px solid #4CAF50;
+    border-radius: 50px;
+    color: #4CAF50;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table-link:hover {
+    background-color: #4CAF50;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.table-link:active {
+    transform: translateY(2px);
+}
+
+/* Button Styles for Add/Modify/Delete */
+.btn {
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Success Button */
+.btn-success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #45a049;
+}
+
+/* Danger Button */
+.btn-danger {
+    background-color: #f44336;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #e53935;
+}
+
+/* Secondary Button */
+.btn-secondary {
+    background-color: #777;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #666;
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f1f1f1;
+    color: #333;
+}
+
+tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+/* Search Form */
+.search-form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-form input {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.search-form button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.search-form button:hover {
+    background-color: #0056b3;
+}
+
+/* Imprimer Button */
+.btn-info {
+    padding: 12px 30px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-info:hover {
+    background-color: #0056b3;
+}
+
+
+
+</style>
+{% endblock %}
+

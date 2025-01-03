@@ -1,0 +1,117 @@
+{% block content %}
+<div class="container">
+    <h2>Supprimer un Salaire</h2>
+    <p>Êtes-vous sûr de vouloir supprimer le salaire de <strong>{{ salaire.employe.nom }} {{ salaire.employe.prenom }}</strong> 
+       pour le mois de <strong>{{ salaire.mois|date:"F Y" }}</strong> ?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Supprimer</button>
+        <a href="{% url 'gestion_salaires' %}" class="btn btn-secondary">Annuler</a>
+    </form>
+</div>
+{% endblock %}
+
+<style>
+    /* Global settings */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        background-color: #f7f8fa; /* Fond clair et moderne */
+        color: #333;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    /* Container */
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 30px;
+        background-color: #fff;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #d9534f; /* Rouge pour indiquer une action critique */
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 1.2rem;
+        color: #555;
+        margin-bottom: 30px;
+    }
+
+    strong {
+        color: #333;
+    }
+
+    /* Buttons */
+    .btn {
+        font-size: 1rem;
+        padding: 12px 30px;
+        border-radius: 50px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        text-decoration: none;
+        margin-top: 20px;
+    }
+
+    .btn-danger {
+        background-color: #d9534f;
+        color: white;
+        border: none;
+    }
+
+    .btn-danger:hover {
+        background-color: #c9302c;
+        color: white;
+    }
+
+    .btn-secondary {
+        background-color: #f0f2f5;
+        color: #5a6268;
+        border: 1px solid #5a6268;
+        margin-top: 20px;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+        color: white;
+    }
+
+    /* Form styling */
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    form button {
+        margin-top: 20px;
+    }
+
+    /* Footer */
+    footer {
+        background-color: #f0f2f5;
+        text-align: center;
+        padding: 20px;
+        margin-top: 30px;
+        border-top: 1px solid #ddd;
+    }
+
+    footer p {
+        color: #888;
+        font-size: 0.9rem;
+    }
+
+</style>
+

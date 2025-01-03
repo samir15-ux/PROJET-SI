@@ -1,0 +1,170 @@
+{% block content %}
+<div class="container mt-5">
+    <h2>{{ employe.nom }} {{ employe.prenom }}</h2>
+    <p><strong>Date de naissance :</strong> {{ employe.daten }}</p>
+    <p><strong>Email :</strong> {{ employe.email }}</p>
+    <p><strong>Téléphone :</strong> {{ employe.telephone }}</p>
+    <p><strong>Service :</strong> {{ employe.id_service.description }}</p>
+
+    <h3 class="mt-4">Évaluations</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Note</th>
+                <th>Rapport</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for evaluation in evaluations %}
+                <tr>
+                    <td>{{ evaluation.date }}</td>
+                    <td>{{ evaluation.note }}</td>
+                    <td>{{ evaluation.commentaire }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="3">Aucune évaluation disponible.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{% url 'ajouter_evaluation' employe.id %}" class="btn btn-success">Ajouter Évaluation</a>
+    <a href="{% url 'Gestion_personnel' %}" class="btn btn-success">Retour</a>
+</div>
+<style>
+    /* Global settings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #f7f8fa; /* Fond clair */
+    color: #444;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Container */
+.container {
+    max-width: 1000px;
+    margin-top: 50px;
+    padding: 30px;
+    background-color: #fff;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+/* Title and Name */
+h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #418cd1;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #418cd1;
+    margin-top: 30px;
+}
+
+/* Paragraphs */
+p {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+strong {
+    color: #418cd1;
+    font-weight: 600;
+}
+
+/* Table Styles */
+.table {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.table th,
+.table td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.table th {
+    background: linear-gradient(205.17deg, #418cd1 10.93%, #9c41d1 116.08%); /* Dégradé en tête de table */
+    color: white;
+    font-weight: 700;
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.table tbody tr:nth-child(even) {
+    background-color: #f1f1f1;
+}
+
+.table td {
+    color: #555;
+}
+
+/* Button Styles */
+.btn {
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.btn-success {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+}
+
+.btn-success:hover {
+    background-color: #388E3C;
+    color: white;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    h3 {
+        font-size: 1.6rem;
+    }
+
+    .table th, .table td {
+        font-size: 1rem;
+        padding: 8px;
+    }
+
+    .btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+</style>
+{% endblock %}

@@ -1,0 +1,226 @@
+{% block content %}
+<div class="container">
+    <h2>Liste des Recrutements</h2>
+
+    <!-- Ajouter un recrutement -->
+    <a href="{% url 'ajouter_recrutement' %}" class="btn btn-primary">Ajouter un Recrutement</a>
+
+    <!-- Formulaire de recherche -->
+    <form method="get" class="search-form">
+        <input type="text" name="search" placeholder="Rechercher par poste..." value="{{ request.GET.search }}">
+        <button type="submit" class="btn btn-secondary">Rechercher</button>
+    </form>
+
+    <!-- Table des recrutements -->
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Poste</th>
+                <th>Description</th>
+                <th>Date de Publication</th>
+                <th>Date Limite</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for recrutement in recrutements %}
+            <tr>
+                <td>{{ recrutement.poste }}</td>
+                <td>{{ recrutement.description }}</td>
+                <td>{{ recrutement.date_publication }}</td>
+                <td>{{ recrutement.date_limite }}</td>
+                <td>
+                    <a href="{% url 'modifier_recrutement' recrutement.id %}" class="btn btn-warning">Modifier</a>
+                    <a href="{% url 'supprimer_recrutement' recrutement.id %}" class="btn btn-danger">Supprimer</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">Aucun recrutement trouvé.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Bouton d'impression -->
+    <button onclick="window.print()" class="btn btn-info">Imprimer</button>
+    <a href="{% url 'gestion_tables' %}" class="btn btn-secondary">Retour</a>
+</div>
+{% endblock %}
+
+<style>
+    /* Global Settings */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+        background-color: #f4f7fc;
+        color: #333;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    /* Container */
+    .container {
+        max-width: 1000px;
+        margin: 50px auto;
+        padding: 30px;
+        background-color: #fff;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #285DC2;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    /* Search Form */
+    .search-form {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        gap: 10px;
+    }
+
+    .search-form input {
+        width: 75%;
+        padding: 10px;
+        font-size: 1rem;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        transition: border-color 0.3s ease;
+    }
+
+    .search-form input:focus {
+        border-color: #285DC2;
+        outline: none;
+    }
+
+    .search-form button {
+        width: 20%;
+        padding: 10px;
+        font-size: 1rem;
+        color: white;
+        background-color: #418cd1;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .search-form button:hover {
+        background-color: #357ab7;
+    }
+
+    /* Table Styling */
+    .table {
+        width: 100%;
+        margin-top: 30px;
+        border-collapse: collapse;
+    }
+
+    .table th,
+    .table td {
+        padding: 12px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    .table th {
+        background: linear-gradient(205.17deg, #418cd1 10.93%, #9c41d1 116.08%);
+        color: white;
+        font-weight: 700;
+    }
+
+    .table-striped tbody tr:nth-child(odd) {
+        background-color: #f9f9f9;
+    }
+
+    .table-striped tbody tr:nth-child(even) {
+        background-color: #f0f0f0;
+    }
+
+    .table td {
+        color: #555;
+    }
+
+    .table td:last-child {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    /* Buttons */
+    .btn {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        margin-top: 20px;
+    }
+
+    .btn-primary {
+        background-color: #285DC2;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #418cd1;
+    }
+
+    .btn-secondary {
+        background-color: #f0f2f5;
+        color: #285DC2;
+        border: 2px solid #285DC2;
+    }
+
+    .btn-secondary:hover {
+        background-color: #285DC2;
+        color: white;
+    }
+
+    .btn-warning {
+        background: linear-gradient(205.17deg, #418cd1 10.93%, #9c41d1 116.08%);
+        color: white;
+    }
+
+    .btn-danger {
+        background: linear-gradient(205.17deg, #418cd1 10.93%, #9c41d1 116.08%);
+        color: white;
+    }
+
+    .btn-info {
+        background-color: #418cd1;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 1.1rem;
+    }
+
+    .btn-info:hover {
+        background-color: #418cd1;
+    }
+
+    /* Footer */
+    footer {
+        background-color: #f0f2f5;
+        text-align: center;
+        padding: 15px 0;
+        margin-top: 30px;
+        border-top: 1px solid #ddd;
+    }
+
+    footer p {
+        color: #888;
+        font-size: 0.9rem;
+    }
+</style>
+

@@ -1,0 +1,125 @@
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Ajouter une Évaluation pour {{ employe.nom }} {{ employe.prenom }}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+       <a href="{% url 'fiche_employe' employe.id  %}"class="btn btn-primary">Retour</a>
+    </form>
+</div>
+<style>
+    /* Global Settings */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: #f7f8fa; /* Fond clair */
+    color: #444;
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+/* Container */
+.container {
+    max-width: 800px;
+    margin-top: 50px;
+    padding: 30px;
+    background-color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+/* Title */
+h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #418cd1; /* Bleu clair */
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* Form */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Button */
+.btn {
+    font-size: 1.1rem;
+    padding: 12px 30px;
+    border-radius: 50px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-primary {
+    background-color: #418cd1;
+    color: white;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #357ab7;
+}
+
+/* Form Field Styling */
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #444;
+    margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #418cd1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        margin: 20px;
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+    }
+
+    .btn {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+    }
+}
+
+</style>
+{% endblock %}
