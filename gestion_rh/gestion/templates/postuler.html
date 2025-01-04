@@ -3,163 +3,206 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire de Candidature</title>
-    
+    <title>Postuler</title>
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            font-family: 'Roboto', Arial, sans-serif;
+            background: linear-gradient(120deg, #28292f, #004e92, #2b04ef);
+            color: white;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(205.17deg, #418cd1 10.93%, #9c41d1 116.08%);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .header .logo {
+            font-size: 24px;
+            color: #f7f4f4;
+            font-weight: bold;
+        }
+
+        .header ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header ul li {
+            margin: 0 15px;
+        }
+
+        .header ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .header ul li a:hover {
+            color: #c2bdbc;
+        }
+
+        /* Form Styles */
+        .form-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #004e92;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input, select, textarea, button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #004e92;
+            box-shadow: 0 0 5px rgba(0, 78, 146, 0.3);
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        button {
+            background: linear-gradient(205.17deg, #418cd1 10.93%, #9c41d1 116.08%);
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background: #5e57e2;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 22px;
+            }
+
+            button {
+                font-size: 16px;
+            }
+        }
+    </style>
 </head>
 <body>
     <header class="header">
-        <div class="logo">RHPLUS</div>
+        <div class="logo">Gestion RH</div>
         <nav>
-            <ul>
-                <li><a href="#">Accueil</a></li>
+            <ul>   
+                <li><a href="{% url 'index' %}">Accueil</a></li>
                 <li><a href="#">Zone de candidature</a></li>
             </ul>
         </nav>
     </header>
 
-    <main class="form-container">
+    <div class="form-container">
         <h1>Formulaire de candidature</h1>
-        <form action="{% url 'submit_form' %}" method="post" enctype="multipart/form-data">
+       
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="form-group">
-                <label for="prenom">Prénom</label>
-                <input type="text" id="prenom" name="prenom" required>
+                <label for="recrutement">Poste:</label>
+                {{ form.recrutement }}
             </div>
             <div class="form-group">
-                <label for="nom">Nom</label>
-                <input type="text" id="nom" name="nom" required>
+                <label for="prenom">Prénom:</label>
+                {{ form.prenom }}
             </div>
+
             <div class="form-group">
-                <label for="date_naissance">Date de naissance</label>
-                <input type="date" id="date_naissance" name="date_naissance" required>
+                <label for="nom">Nom:</label>
+                {{ form.nom }}
             </div>
+
             <div class="form-group">
-                <label for="genre">Genre</label>
-                <select id="genre" name="genre" required>
-                    <option value="Homme">Homme</option>
-                    <option value="Femme">Femme</option>
-                </select>
+                <label for="date_naissance">Date de naissance:</label>
+                {{ form.date_naissance }}
             </div>
+
             <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required>
+                <label for="genre">Genre:</label>
+                {{ form.genre }}
             </div>
+
             <div class="form-group">
-                <label for="telephone">Téléphone</label>
-                <input type="tel" id="telephone" name="telephone" required>
+                <label for="email">Email:</label>
+                {{ form.email }}
             </div>
+
             <div class="form-group">
-                <label for="niveau">Niveau</label>
-                <input type="text" id="niveau" name="niveau" placeholder="Niveau d'étude" required>
+                <label for="telephone">Téléphone:</label>
+                {{ form.telephone }}
             </div>
+
             <div class="form-group">
-                <label for="poste">Poste</label>
-                <input type="text" id="poste" name="poste" required>
+                <label for="niveau_etude">Niveau d'étude:</label>
+                {{ form.niveau_etude }}
             </div>
+
             <div class="form-group">
-                <label for="cv">CV</label>
-                <input type="file" id="cv" name="cv" required>
+                <label for="cv">CV:</label>
+                {{ form.cv }}
             </div>
+
             <div class="form-group">
-                <label for="motivation">Lettre de Motivation</label>
-                <input type="file" id="motivation" name="motivation" required>
+                <label for="lettre_motivation">Lettre de Motivation:</label>
+                {{ form.lettre_motivation }}
             </div>
-            <button type="submit" class="submit-button">Soumettre</button>
+
+            <button type="submit">Soumettre</button>
         </form>
-    </main>
+    </div>
 </body>
 </html>
-<style>
-    body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(120deg, #000428, #004e92);
-    color: white;
-}
 
-.header {
-    background-color: #000;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: white;
-}
-
-.header .logo {
-    font-size: 24px;
-    color: #e74c3c;
-    font-weight: bold;
-}
-
-.header ul {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-}
-
-.header ul li {
-    margin: 0 15px;
-}
-
-.header ul li a {
-    text-decoration: none;
-    color: white;
-    font-size: 16px;
-}
-
-.form-container {
-    max-width: 800px;
-    margin: 50px auto;
-    background: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    color: #333;
-}
-
-h1 {
-    text-align: center;
-    color: #004e92;
-    margin-bottom: 20px;
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
-input, select, button {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-input[type="file"] {
-    padding: 5px;
-}
-
-button {
-    background: #004e92;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    border: none;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-button:hover {
-    background: #e74c3c;
-}
-
-</style>

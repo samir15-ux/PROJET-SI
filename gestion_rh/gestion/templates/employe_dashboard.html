@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Employé</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: hwb(228 94% 4%);
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background: linear-gradient(205.17deg, #418cd1 10.93%, #9c41d1 116.08%);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 {
+            margin: 0;
+            color: #ffffff;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+        }
+        .profile-container {
+            display: flex;
+            padding: 20px;
+            margin: 30px auto;
+            max-width: 800px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .profile-picture {
+            margin-right: 20px;
+        }
+        .profile-picture img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            
+        }
+        .profile-info {
+            flex: 1;
+        }
+        .profile-info h2 {
+            margin: 0 0 10px;
+            color: rgb(58, 58, 58);
+        }
+        .profile-info p {
+            color: rgb(75, 74, 74);
+        }
+        .info-item {
+            margin-bottom: 10px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            margin-top: 15px;
+            background-color: #7277fe;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .btn:hover {
+            background-color: #645d89;
+        }
+        footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #e4e4e4;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            margin: 0;
+
+        }
+
+        footer p {
+            padding: 18px;
+            color: rgb(8, 8, 8);
+        }
+         /* Menu déroulant */
+         .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #fffafa;
+            min-width: 180px;
+            box-shadow: 0px 4px 6px rgb(40, 8, 248);
+            border-radius: 4px;
+            z-index: 1;
+        }
+
+        .dropdown-content a {
+            color: rgb(8, 8, 8);
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+            font-size: 16px;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #3e4afca4;
+        }
+
+        /* Montre le menu au hover */
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown:hover > a {
+            color: #ffffff; /* Met en surbrillance le bouton principal */
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Gestion RH</h1>
+        <div class="nav-links"> 
+            <a href="/gestion/employe/dashboard/">Profil</a> 
+            
+            <div class="dropdown">
+                <a href="#">Congés</a>
+                <div class="dropdown-content">
+                    <a href="{% url 'demande_conge' %}">Demande Congé</a>
+                    <a href="{% url 'consulter_conges' %}">Consulter mes Congés</a>
+                </div>
+            </div>
+            <a href="#">Annoncements</a>
+        </div>
+        <a href="{% url 'logout' %}" class="btn">Se déconnecter</a>
+    </div>
+    
+    <div class="profile-container">
+        <div class="profile-picture">
+            {% if employe.user.profile_picture %}
+                <img src="{{ employe.user.profile_picture.url }}" alt="Photo de profil">
+            {% else %}
+                <img src="/static/images/1.webp" alt="Photo par défaut">
+            {% endif %}
+        </div>
+        
+        <div class="profile-info">
+            <h2>{{ employe.nom }} {{ employe.prenom}}</h2>
+            <p class="info-item"><strong>Email :</strong> {{ employe.email }}</p>
+            <p class="info-item"><strong>Téléphone :</strong> {{ employe.telephone }}</p>
+            <p class="info-item"><strong>Département :</strong> {{ employe.departement }}</p>
+            <p class="info-item"><strong>Poste :</strong> {{ employe.poste }}</p>
+            <a href="{% url 'modifier_employe' employe.id %}" class="btn">Modifier mes informations</a>
+        </div>
+    </div>
+    <footer> 
+        <p>© 2024 Gestion RH. Tous droits réservés.</p>
+    </footer> 
+
+    
+</body>
+</html>
+
+

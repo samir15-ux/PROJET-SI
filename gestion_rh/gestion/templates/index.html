@@ -3,37 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RHPLUS</title>
+    <title>Gestion RH</title>
     
 </head>
 <body>
     <header class="header">
-        <div class="logo">RHPLUS</div>
+        <div class="logo">Gestion RH</div>
         <nav>
             <ul>
-                <li><a href="#">Accueil</a></li>
-                <li><a href="#">Zone de candidature</a></li>
-                <li><a href="{% url 'register' %}">S'inscrire</a></li>
-                <li><a href="{% url 'login' %}">Connexion</a></li>
+                <li><a href="{% url 'index' %}"class="buttonn">Accueil</a></li>
+                <li><a href="{% url 'postuler' %}"class="buttonn">Zone de candidature</a></li>
+                <li><a href="{% url 'register' %}"class="buttonn">S'inscrire</a></li>
+                <li><a href="{% url 'login' %}"class="buttonn">Connexion</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="main-content">
         <div class="intro">
-            <h1>RHPLUS?</h1>
+            <h1>Gestion RH?</h1>
             <p>
                 Est un espace qui met en relation les employés, les candidats et l'entreprise...
             </p>
             <p>
                 Si vous êtes à la recherche d'un emploi, vous pouvez postuler auprès de notre entreprise en accédant à ce lien ↓
             </p>
-            <a href="#" class="button">Postuler »</a>
+            <a href="{% url 'postuler' %}" class="button">Postuler »</a>
         </div>
         <div class="image-container">
-            <img src="/static/images/back1.jpg" alt="Handshake">
+            <img src="/static/images/back.webp" alt="Handshake">
         </div>
     </main>
+    <footer>
+        <p>© 2024 Gestion RH. Tous droits réservés.</p>
+    </footer> 
 </body>
 </html>
 <style>
@@ -47,7 +50,7 @@ body {
 
 /* Header styles */
 .header {
-    background-color: #000;
+    background: linear-gradient(205.17deg, #418cd1 10.93%, #9c41d1 116.08%);
     color: white;
     padding: 15px 20px;
     display: flex;
@@ -58,9 +61,9 @@ body {
 }
 
 .header .logo {
-    font-size: 24px;
+    font-size: 24px; 
     font-weight: bold;
-    color: #e74c3c; /* RHPLUS en rouge */
+    color: #f4f2f2; /* RHPLUS en rouge */
 }
 
 .header nav ul {
@@ -99,7 +102,7 @@ body {
 
 .intro h1 {
     font-size: 48px;
-    color: #e74c3c;
+    color: #7277fe;
     margin-bottom: 10px;
     font-weight: bold;
 }
@@ -116,27 +119,52 @@ body {
     padding: 12px 25px;
     font-size: 18px;
     font-weight: bold;
-    background-color: black;
+    background-color: #285DC2;
     color: white;
     text-decoration: none;
     border-radius: 5px;
     transition: background-color 0.3s ease;
 }
+.buttonn {
+    display: inline-block;
+    padding: 12px 20px;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #548cf3;
+    color: white;
+    text-decoration: none;
+    border-radius: 15px;
+    transition: background-color 0.13s ease;
+}
 
 .button:hover {
-    background-color: #e74c3c;
+    background-color: #5173b2;
 }
 
 /* Image container */
 .image-container {
-    max-width: 45%;
+    max-width: 38.7%;
 }
 
 .image-container img {
-    max-width: 100%;
-    border-radius: 10px;
+    max-width: 115%;
+    border-radius: 10px; 
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
 }
+footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f2f5;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+            margin: 0;
+        }
+
+        footer p {
+            padding: 18px;
+        }
 
 
 </style>

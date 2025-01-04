@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import  Employe, Evaluation,  Service, Conge, Contrat, Salaire, Recrutement, SoldeConge
+from .models import  Candidature, Employe, Evaluation,Conge, Contrat, Salaire, Recrutement, SoldeConge
 
 class UserCreationForm (forms.ModelForm):
     password1 = forms.CharField(label='Mot de passe', widget=forms.PasswordInput)
@@ -27,16 +27,6 @@ class EvaluationForm(forms.ModelForm):
 class EmployeForm(forms.ModelForm):
     class Meta:
         model = Employe 
-        fields = '__all__'
-
-class ServiceForm(forms.ModelForm):
-    class Meta:
-        model = Service
-        fields = ['code', 'description']
-
-class CongeForm(forms.ModelForm):
-    class Meta:
-        model = Conge
         fields = '__all__'
 
     def clean(self):
@@ -67,6 +57,38 @@ class RecrutementForm(forms.ModelForm):
         model = Recrutement
         fields = '__all__'
 
+from django import forms
+from .models import Candidature, Recrutement
 
+class CandidatureForm(forms.ModelForm):
+    class Meta:
+        model = Candidature
+        fields = ['prenom', 'nom', 'date_naissance', 'genre', 'email', 'telephone', 
+                  'niveau_etude', 'cv', 'lettre_motivation', 'recrutement']  
+        widgets = {
+            'date_naissance': forms.DateInput(attrs={'type': 'date'}),
+            'genre': forms.Select(choices=[('Homme', 'Homme'), ('Femme', 'Femme')]),
+        }
+
+
+class CongeForm(forms.ModelForm):
+    class Meta:
+        model = Conge
+        fields = ['date_debut', 'date_fin', 'type_conge', 'commentaire']
+        widgets = {
+            'date_debut': forms.DateInput(attrs={'type': 'date'}),
+            'date_fin': forms.DateInput(attrs={'type': 'date'}),
+            'commentaire': forms.Textarea(attrs={'rows': 3}),
+        }
+
+class congeForm(forms.ModelForm):
+    class Meta:
+        model = Conge
+        fields = ['employe', 'date_debut', 'date_fin', 'type_conge', 'commentaire']
+        widgets = {
+            'date_debut': forms.DateInput(attrs={'type': 'date'}),
+            'date_fin': forms.DateInput(attrs={'type': 'date'}),
+            'commentaire': forms.Textarea(attrs={'rows': 3}),
+        }
 
 

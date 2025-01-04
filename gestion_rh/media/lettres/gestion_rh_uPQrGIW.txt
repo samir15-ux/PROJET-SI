@@ -1,0 +1,30 @@
+Python –m venv env_rh
+
+env_rh\Scripts\activate
+
+pip install django
+
+django-admin startproject gestion_rh
+
+cd gestion_rh
+
+django-admin startapp gestion
+
+Python manage.py migrate
+
+Python manage.py createsuperuser
+
+Python manage.py runserver
+
+
+<!-- <a href="{% url 'index' %}" id="back"><i class='bx bx-home' style='color:#285dc2'></i></a> -->
+
+path('logout/', include('django.contrib.auth.urls')),  # Déconnexion gérée par Django
+
+href="{% url 'tables' %}"
+href="{% url 'tableaux_de_bord' %}"
+href="{% url 'gestion_recrutements' %}"
+href="{% url 'gestion_contrats' %}"
+ href="{% url 'gestion_salaires' %}"
+href="{% url 'gestion_conges' %}"
+href="{% url 'gestion_personnel' %}"

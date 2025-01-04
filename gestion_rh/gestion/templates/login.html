@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
@@ -156,18 +157,19 @@
             text-decoration-color: #1c1e21;
         }
     </style>
+    
     <title>Connexion</title>
 </head>
 
 <body>
-    <!-- Bouton retour à la page d'accueil -->
+    <a href="{% url 'index' %}" id="back"><i class='bx bx-home' style='color:#285dc2'></i></a>
     
 
     <div class="contenu">
         <div class="text">
             <h1>Gestion RH</h1>
             <p>Bienvenue</p>
-        </div>
+        </div> 
 
         <form method="post" class="login">
             {% csrf_token %}
@@ -201,6 +203,6 @@
     <footer>
         <p>© 2024 Gestion RH. Tous droits réservés.</p>
     </footer> 
-</body>
+</body> 
 
 </html>

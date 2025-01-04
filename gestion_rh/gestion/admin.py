@@ -1,17 +1,13 @@
 from django.contrib import admin
 from django.contrib import admin
-from .models import Employe, Service, Conge, Salaire, Contrat, Recrutement, Evaluation, SoldeConge
+from .models import Employe, Conge, Salaire, Contrat, Recrutement, Candidature, Evaluation, SoldeConge
 
 # Register your models here.
 
 class EmployeAdmin(admin.ModelAdmin):
-    list_display = ('code', 'nom', 'prenom', 'date_embauche', 'id_service')
+    list_display = ('code', 'nom', 'prenom', 'date_embauche')
     search_fields = ('nom', 'prenom', 'code')
-    list_filter = ('id_service', 'date_embauche')
-
-class ServiceAdmin(admin.ModelAdmin):
-    list_display = ('code', 'description')
-    search_fields = ('description',)
+    list_filter = ( 'date_embauche','departement', 'poste')
 
 class CongeAdmin(admin.ModelAdmin):
     list_display = ('employe', 'type_conge', 'date_debut', 'date_fin')
@@ -32,7 +28,9 @@ class RecrutementAdmin(admin.ModelAdmin):
     list_display = ('poste', 'date_publication', 'date_limite')
     search_fields = ('poste',)
 
-
+class CandidatureAdmin(admin.ModelAdmin):
+    list_display = ('prenom', 'nom', 'etat')
+    search_fields = ('prenom', 'nom', 'etat', 'email')
 
 class EvaluationAdmin(admin.ModelAdmin):
     list_display = ('employe', 'date', 'note', 'commentaire')
@@ -45,11 +43,11 @@ class FavorisAdmin(admin.ModelAdmin):
 
 # Enregistrement des modèles avec leurs classes admin respectives
 admin.site.register(Employe, EmployeAdmin)
-admin.site.register(Service, ServiceAdmin)
 admin.site.register(Conge, CongeAdmin)
 admin.site.register(Salaire, SalaireAdmin)
 admin.site.register(Contrat, ContratAdmin)
 admin.site.register(Recrutement, RecrutementAdmin)
+admin.site.register(Candidature, CandidatureAdmin)
 admin.site.register(Evaluation, EvaluationAdmin)
 @admin.register(SoldeConge)
 class SoldeCongeAdmin(admin.ModelAdmin):

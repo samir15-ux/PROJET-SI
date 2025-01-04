@@ -1,46 +1,65 @@
-import base64
-from io import BytesIO
-from django.http import HttpResponse
+from django.forms import ValidationError
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages
-import matplotlib.pyplot as plt
 from django.contrib.auth.decorators import login_required
 
 
-from .forms import CongeForm, ContratForm, EmployeForm, EvaluationForm,  RecrutementForm, SalaireForm, ServiceForm, SoldeCongeForm
-from .models import Candidature, Employe, Evaluation, Recrutement, Salaire, Service, Conge, Contrat, SoldeConge
+from .forms import CandidatureForm, CongeForm, ContratForm, EmployeForm, EvaluationForm,  RecrutementForm, SalaireForm, SoldeCongeForm, congeForm
+from .models import Employe, Evaluation, Recrutement, Salaire, Conge, Contrat, SoldeConge
 
 # Create your views here.
-
 
 
 def inscription(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
+        code_employe = request.POST.get('code_employe')  # Récupérer le code employé depuis le formulaire
+
+        try:
+            # Vérifiez que le code employé existe dans la base de données
+            employe = Employe.objects.get(code=code_employe)
+        except Employe.DoesNotExist:
+            # Si le code employé est invalide, affichez un message d'erreur
+            messages.error(request, "Le code employé est invalide. Veuillez réessayer.")
+            return render(request, 'register.html', {'form': form})
+        
         if form.is_valid():
-            form.save()
-            return redirect('login')  # Redirige vers la page de connexion après inscription
+            # Si tout est valide, sauvegardez le nouvel utilisateur
+            user = form.save()
+            messages.success(request, "Inscription réussie !")
+            return redirect('login')  # Redirige vers la page de connexion
+    
     else:
         form = UserCreationForm()
+
     return render(request, 'register.html', {'form': form})
 
 
 
 def connexion(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        
+        # Authentifier l'utilisateur
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('/gestion/dashboard/')  # Redirection après connexion réussie
+            
+            # Redirection basée sur le rôle
+            if user.is_staff:  # Agent RH
+                return redirect('/gestion/dashboard/')  # Redirige vers l'administration Django
+            else:  # Employé
+                return redirect('/gestion/employe/dashboard/')  # Redirige vers le tableau de bord employé
         else:
+            # Afficher un message d'erreur si les identifiants sont incorrects
             messages.error(request, "Nom d'utilisateur ou mot de passe incorrect.")
+    
+    # Afficher la page de connexion
     return render(request, 'login.html')
-
 
 def logout_view(request):
     logout(request)
@@ -54,15 +73,14 @@ def dashboard(request):
     return render(request,'dashboard.html')
 
 
+
 def gestion_tables(request):
     employes = Employe.objects.all()
-    services = Service.objects.all()
     conges = Conge.objects.all()
     contrats = Contrat.objects.all()
     
     return render(request, 'gestion_tables.html', {
         'employes': employes,
-        'services': services,
         'conges': conges,
         'contrats': contrats
     })
@@ -110,46 +128,6 @@ def supprimer_employe(request, pk):
 
 
 
-
-
-def gestion_services(request):
-    search_query = request.GET.get('search', '')
-    services = Service.objects.filter(description__icontains=search_query) if search_query else Service.objects.all()
-    return render(request, 'gestion_services/service_list.html', {'services': services})
-
-def ajouter_service(request):
-    if request.method == 'POST':
-        form = ServiceForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('gestion_services')
-    else:
-        form = ServiceForm()
-    return render(request, 'gestion_services/service_form.html', {'form': form, 'action': 'Ajouter'})
-
-def modifier_service(request, pk):
-    service = get_object_or_404(Service, pk=pk)
-    if request.method == 'POST':
-        form = ServiceForm(request.POST, instance=service)
-        if form.is_valid():
-            form.save()
-            return redirect('gestion_services')
-    else:
-        form = ServiceForm(instance=service)
-    return render(request, 'gestion_services/service_form.html', {'form': form, 'action': 'Modifier'})
-
-def supprimer_service(request, pk):
-    service = get_object_or_404(Service, pk=pk)
-    if request.method == 'POST':
-        service.delete()
-        return redirect('gestion_services')
-    return render(request, 'gestion_services/service_confirm_delete.html', {'service': service})
-
-
-
-
-
-
 def gestion_conges(request):
     search_query = request.GET.get('search', '')
     conges = Conge.objects.filter(employe__nom__icontains=search_query) if search_query else Conge.objects.all()
@@ -157,25 +135,25 @@ def gestion_conges(request):
 
 def ajouter_conge(request):
     if request.method == 'POST':
-        form = CongeForm(request.POST)
+        form = congeForm(request.POST)
         if form.is_valid():
             form.save()
             solde = SoldeConge.objects.get(employe=Conge.employe)
             solde.deduire_solde(Conge.type_conge, Conge.duree_conge())
             return redirect('gestion_conges')
     else:
-        form = CongeForm()
+        form = congeForm()
     return render(request, 'gestion_conges/conge_form.html', {'form': form, 'action': 'Ajouter'})
 
 def modifier_conge(request, pk):
     conge = get_object_or_404(Conge, pk=pk)
     if request.method == 'POST':
-        form = CongeForm(request.POST, instance=conge)
+        form = congeForm(request.POST, instance=conge)
         if form.is_valid():
             form.save()
             return redirect('gestion_conges')
     else:
-        form = CongeForm(instance=conge)
+        form = congeForm(instance=conge)
     return render(request, 'gestion_conges/conge_form.html', {'form': form, 'action': 'Modifier'})
 
 
@@ -339,5 +317,58 @@ def solde_conge_update(request, employe_id):
         form = SoldeCongeForm(instance=solde)
     return render(request, "gestion_conges/solde_conge_form.html", {"form": form, "solde": solde})
 
+def postuler(request):
+    if request.method == 'POST':
+        form = CandidatureForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+        form = CandidatureForm()
+    return render(request, 'postuler.html', {'form': form})
 
+from django.contrib import messages
+
+@login_required
+def employe_dashboard(request):
+    try:
+        # Récupérer l'employé associé à l'utilisateur connecté
+        employe = Employe.objects.get(user=request.user)  # L'utilisateur connecté doit avoir une relation avec l'employé
+    except Employe.DoesNotExist:
+        employe = None  # Si aucun employé n'est trouvé, vous pouvez gérer cette situation comme vous voulez
+    
+    return render(request, 'employe_dashboard.html', {'employe': employe})
+
+def demande_conge(request):
+    if not request.user.is_authenticated:
+        messages.error(request, "Vous devez être connecté pour soumettre une demande de congé.")
+        return redirect("login")  # Ou une redirection appropriée
+
+    # Vérifier si l'utilisateur a bien un employé associé
+    if not hasattr(request.user, 'employe') or request.user.employe is None:
+        messages.error(request, "Aucun employé associé à votre compte.")
+        return redirect("home")  # Ou une redirection appropriée
+
+    if request.method == "POST":
+        form = CongeForm(request.POST)
+        if form.is_valid():
+            conge = form.save(commit=False)
+            conge.employe = request.user.employe  # Associer l'employé connecté
+            try:
+                conge.clean()  # Valider les règles métier (dates, solde)
+                conge.save()  # Sauvegarder si tout est valide
+                messages.success(request, "Votre demande de congé a été soumise avec succès.")
+                return redirect("consulter_conges")  # Rediriger vers la liste des congés
+            except ValidationError as e:
+                form.add_error(None, e)  # Ajouter l'erreur au formulaire
+        else:
+            messages.error(request, "Veuillez corriger les erreurs ci-dessous.")
+    else:
+        form = CongeForm()
+
+    return render(request, "gestion_conges/demande_conge.html", {"form": form})
+
+def consulter_conges(request):
+    conges = Conge.objects.filter(employe=request.user.employe).order_by('-date_debut')
+    return render(request, "gestion_conges/consulter_conges.html", {"conges": conges})
 
