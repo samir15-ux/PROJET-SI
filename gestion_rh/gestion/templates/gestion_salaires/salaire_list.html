@@ -1,208 +1,5 @@
-<!DOCTYPE html>
-<html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Liste des Salaires{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Global settings */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        body {
-            background-color: #f7f8fa; /* Fond clair et moderne */
-            color: #333;
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin-top: 50px;
-            padding: 30px;
-            background-color: #fff;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 12px;
-        }
-
-        h2 {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #285DC2;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .search-form {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            gap: 10px;
-        }
-
-        .search-form input {
-            width: 75%;
-            padding: 10px;
-            font-size: 1rem;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-        }
-
-        .search-form button {
-            width: 20%;
-            padding: 10px;
-            font-size: 1rem;
-            color: white;
-            background-color: #418cd1;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .search-form button:hover {
-            background-color: #357ab7;
-        }
-
-        .table {
-            width: 100%;
-            margin-top: 30px;
-            border-collapse: collapse;
-        }
-
-        .table th,
-        .table td {
-            padding: 12px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
-
-        .table th {
-            background: linear-gradient(205.17deg, #418cd1 10.93%, #9c41d1 116.08%);
-            color: white;
-            font-weight: 700;
-        }
-
-        .table-striped tbody tr:nth-child(odd) {
-            background-color: #f9f9f9;
-        }
-
-        .table-striped tbody tr:nth-child(even) {
-            background-color: #f0f0f0;
-        }
-
-        .table td {
-            color: #555;
-        }
-
-        .table td:last-child {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-        }
-
-        .btn {
-            font-size: 0.9rem;
-            padding: 8px 16px;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary {
-            background-color: #285DC2;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: #418cd1;
-        }
-
-        .btn-secondary {
-            background-color: #f0f2f5;
-            color: #285DC2;
-            border: 2px solid #285DC2;
-        }
-
-        .btn-secondary:hover {
-            background-color: #285DC2;
-            color: white;
-        }
-
-        .btn-warning {
-            background: linear-gradient(205.17deg, #418cd1 10.93%, #9c41d1 116.08%);
-            color: white;
-        }
-
-        .btn-danger {
-            background: linear-gradient(205.17deg, #418cd1 10.93%, #9c41d1 116.08%);
-            color: white;
-        }
-
-        .btn-info {
-            background-color: #418cd1;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 1.1rem;
-        }
-
-        .btn-info:hover {
-            background-color: #418cd1;
-        }
-
-        footer {
-            background-color: #f0f2f5;
-            text-align: center;
-            padding: 15px 0;
-            margin-top: 30px;
-            border-top: 1px solid #ddd;
-        }
-
-        footer p {
-            color: #888;
-            font-size: 0.9rem;
-        }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .container {
-                margin: 20px;
-                padding: 20px;
-            }
-
-            h2 {
-                font-size: 1.8rem;
-            }
-
-            .search-form {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .search-form input,
-            .search-form button {
-                width: 100%;
-                margin-bottom: 10px;
-            }
-
-            .btn {
-                width: 100%;
-                padding: 10px;
-                font-size: 1rem;
-                margin-top: 20px;
-            }
-        }
-    </style>
-</head>
-
-<body>
-
+{% extends 'base.html' %}
+{% block title %}Gestion du salaire{% endblock %}
     {% block content %}
     <div class="container">
         <h2>Liste des Salaires</h2>
@@ -220,7 +17,7 @@
                     <th>Mois</th>
                     <th>Salaire Base</th>
                     <th>Primes</th>
-                    <th>Absences</th>
+                    <th>Heures_supplementaires</th>
                     <th>Salaire Final</th>
                     <th>Actions</th>
                 </tr>
@@ -232,8 +29,8 @@
                     <td>{{ salaire.mois|date:"F Y" }}</td>
                     <td>{{ salaire.salaire_base }}</td>
                     <td>{{ salaire.primes }}</td>
-                    <td>{{ salaire.absences }}</td>
-                    <td>{{ salaire.salaire_final }}</td>
+                    <td>{{ salaire.heures_supplementaires }}</td>
+                    <td>{{ salaire.calculer_salaire_total|floatformat:0 }}</td>
                     <td>
                         <a href="{% url 'modifier_salaire' salaire.id %}" class="btn btn-warning">Modifier</a>
                         <a href="{% url 'supprimer_salaire' salaire.id %}" class="btn btn-danger">Supprimer</a>
@@ -250,11 +47,199 @@
         <button onclick="window.print()" class="btn btn-info">Imprimer</button>
         <a href="{% url 'gestion_tables' %}" class="btn btn-secondary">Retour</a>
     </div>
+
+    <style>
+        
+         * {
+             margin: 0;
+             padding: 0;
+             box-sizing: border-box;
+             font-family: 'Poppins', sans-serif;
+         }
+ 
+         body {
+             background-color: #f7f8fa;
+             color: #333;
+             font-size: 16px;
+             line-height: 1.6;
+         }
+ 
+         .container {
+             max-width: 1200px;
+             margin-top: 50px;
+             padding: 30px;
+             background-color: #fff;
+             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+             border-radius: 12px;
+         }
+ 
+         h2 {
+             font-size: 2rem;
+             font-weight: 700;
+             color: #285DC2;
+             margin-bottom: 30px;
+             text-align: center;
+         }
+ 
+         .search-form {
+             display: flex;
+             justify-content: space-between;
+             margin-bottom: 20px;
+             gap: 10px;
+         }
+ 
+         .search-form input {
+             width: 75%;
+             padding: 10px;
+             font-size: 1rem;
+             border: 2px solid #ddd;
+             border-radius: 8px;
+         }
+ 
+         .search-form button {
+             width: 20%;
+             padding: 10px;
+             font-size: 1rem;
+             color: white;
+             background-color: #418cd1;
+             border: none;
+             border-radius: 8px;
+             cursor: pointer;
+             transition: background-color 0.3s ease;
+         }
+ 
+         .search-form button:hover {
+             background-color: #357ab7;
+         }
+ 
+         .table {
+             width: 100%;
+             margin-top: 30px;
+             border-collapse: collapse;
+         }
+ 
+         .table th,
+         .table td {
+             padding: 12px;
+             text-align: center;
+             border: 1px solid #ddd;
+         }
+ 
+         .table th {
+             background: linear-gradient(205.17deg, #418cd1 10.93%, #9c41d1 116.08%);
+             color: white;
+             font-weight: 700;
+         }
+ 
+         .table-striped tbody tr:nth-child(odd) {
+             background-color: #f9f9f9;
+         }
+ 
+         .table-striped tbody tr:nth-child(even) {
+             background-color: #f0f0f0;
+         }
+ 
+         .table td {
+             color: #555;
+         }
+ 
+         .table td:last-child {
+             display: flex;
+             justify-content: center;
+             gap: 10px;
+         }
+ 
+         .btn {
+             font-size: 0.9rem;
+             padding: 8px 16px;
+             border-radius: 25px;
+             transition: all 0.3s ease;
+         }
+ 
+         .btn-primary {
+             background-color: #285DC2;
+             color: white;
+         }
+ 
+         .btn-primary:hover {
+             background-color: #418cd1;
+         }
+ 
+         .btn-secondary {
+             background-color: #f0f2f5;
+             color: #285DC2;
+             border: 2px solid #285DC2;
+         }
+ 
+         .btn-secondary:hover {
+             background-color: #285DC2;
+             color: white;
+         }
+ 
+         .btn-warning,
+         .btn-danger {
+             background: linear-gradient(205.17deg, #418cd1 10.93%, #9c41d1 116.08%);
+             color: white;
+         }
+ 
+         .btn-info {
+             background-color: #418cd1;
+             color: white;
+             border: none;
+             cursor: pointer;
+             font-size: 1.1rem;
+         }
+ 
+         .btn-info:hover {
+             background-color: #418cd1;
+         }
+ 
+         footer {
+             background-color: #f0f2f5;
+             text-align: center;
+             padding: 15px 0;
+             margin-top: 30px;
+             border-top: 1px solid #ddd;
+         }
+ 
+         footer p {
+             color: #888;
+             font-size: 0.9rem;
+         }
+ 
+         
+         @media (max-width: 768px) {
+             .container {
+                 margin: 20px;
+                 padding: 20px;
+             }
+ 
+             h2 {
+                 font-size: 1.8rem;
+             }
+ 
+             .search-form {
+                 flex-direction: column;
+                 align-items: flex-start;
+             }
+ 
+             .search-form input,
+             .search-form button {
+                 width: 100%;
+                 margin-bottom: 10px;
+             }
+ 
+             .btn {
+                 width: 100%;
+                 padding: 10px;
+                 font-size: 1rem;
+                 margin-top: 20px;
+             }
+         }
+     </style>
+ </head>
     {% endblock %}
 
-    <footer>
-        <p>© 2024 Gestion RH. Tous droits réservés.</p>
-    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

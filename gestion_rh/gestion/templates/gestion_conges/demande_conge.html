@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Demande de Congé</title>
     <style>
-        /* Reset des marges et des paddings pour tous les éléments */
+       
         * {
             margin: 0;
             padding: 0;
@@ -89,7 +89,7 @@
         transition: background-color 0.3s, transform 0.3s ease;
         }
 
-        /* Style du bouton de soumission */
+        
         button {
             background: linear-gradient(205.17deg, #418cd1 10.93%, #9c41d1 116.08%); 
             color: white;
@@ -97,19 +97,19 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        /* Effet de survol pour le bouton de soumission */
+        
         button:hover {
             background-color: #357ab7;
-            transform: translateY(-2px); /* Légère élévation */
+            transform: translateY(-2px); 
         }
 
-        /* Effet de clic pour le bouton de soumission */
+        
         button:active {
             background-color: #2c6c9f;
-            transform: translateY(2px); /* Effet de pression */
+            transform: translateY(2px); 
         }
 
-        /* Style pour le bouton Retour */
+       
         .button {
             background-color: #6c757d;
             color: white;
@@ -118,20 +118,20 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        /* Effet de survol pour le bouton Retour */
+        
         .button:hover {
             background-color: #5a6268;
             color: white;
             transform: translateY(-2px);
         }
 
-        /* Effet de clic pour le bouton Retour */
+        
         .button:active {
             background-color: #545b62;
-            transform: translateY(2px); /* Effet de pression */
+            transform: translateY(2px); 
         }
 
-        /* Effet de focus pour les deux boutons */
+        
         button:focus, .button:focus {
             outline: none;
             box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.6);
@@ -141,7 +141,7 @@
             margin-bottom: 20px;
         }
 
-        /* Styles pour les messages d'erreur */
+       
         .error-message {
             color: #e74c3c;
             font-size: 12px;
@@ -149,7 +149,7 @@
             margin-bottom: 10px;
         }
 
-        /* Ajout d'un espacement autour du formulaire */
+        
         .container {
             padding: 40px;
         }
@@ -164,7 +164,6 @@
             <div class="form-group">
                 <label for="type_conge">Type de Congé</label>
                 {{ form.type_conge }}
-                <!-- Si vous avez des erreurs pour ce champ -->
                 {% if form.type_conge.errors %}
                     <div class="error-message">{{ form.type_conge.errors }}</div>
                 {% endif %}

@@ -5,15 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mes Congés</title>
     <style>
-        /* Style général de la page */
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Tahoma,  Verdana, sans-serif;
             background-color: #f4f7fc;
             margin: 0;
             padding: 20px;
         }
 
-        /* Style du titre */
         h2 {
             color: #333;
             font-size: 2rem;
@@ -21,7 +20,7 @@
             text-align: center;
         }
 
-        /* Style du tableau */
+        
         table {
             width: 100%;
             border-collapse: collapse;
@@ -30,7 +29,6 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        /* Style des en-têtes du tableau */
         th {
             background: linear-gradient(205.17deg, #418cd1 10.93%, #9c41d1 116.08%); 
             color: white;
@@ -39,24 +37,24 @@
             font-weight: bold;
         }
 
-        /* Style des cellules du tableau */
+        
         td {
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
 
-        /* Effet au survol d'une ligne */
+        
         tr:hover {
             background-color: #f1f1f1;
         }
 
-        /* Style des bordures et de la ligne du tableau */
+        
         table, th, td {
             border: 1px solid #ddd;
         }
 
-        /* Style pour le tableau responsive */
+        
         @media screen and (max-width: 768px) {
             table {
                 width: 100%;
@@ -68,7 +66,7 @@
             }
         }
 
-        /* Style du bouton */
+        
         .btn {
             display: inline-block;
             padding: 15px 28px;
@@ -80,30 +78,31 @@
             transition: background-color 0.3s, transform 0.3s;
         }
 
-        /* Style du bouton secondaire */
+        
         .btn-secondary {
             background-color: #6c757d;
             color: white;
             border: 1px solid #6c757d;
+            
         }
 
-        /* Effet de survol */
+        
         .btn-secondary:hover {
             background-color: #5a6268;
             color: white;
-            transform: translateY(-2px); /* Effet de survol avec un léger déplacement */
+            transform: translateY(-2px); 
         }
 
-        /* Effet de focus pour l'accessibilité */
+        
         .btn-secondary:focus {
             outline: none;
             box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5);
         }
 
-        /* Effet lors du clic */
+        
         .btn-secondary:active {
             background-color: #545b62;
-            transform: translateY(1px); /* Effet de pression */
+            transform: translateY(1px); 
         }
 
     </style>
@@ -116,9 +115,9 @@
                 <th>Type de Congé</th>
                 <th>Date Début</th>
                 <th>Date Fin</th>
-                <th>Durée (jours)</th>
-                <th>Commentaire</th>
-            </tr>
+                <th>statut </th>
+                
+            </tr> 
         </thead>
         <tbody>
             {% for conge in conges %}
@@ -126,13 +125,13 @@
                 <td>{{ conge.get_type_conge_display }}</td>
                 <td>{{ conge.date_debut }}</td>
                 <td>{{ conge.date_fin }}</td>
-                <td>{{ conge.duree_conge }}</td>
-                <td>{{ conge.commentaire }}</td>
+                <td>{{ conge.statut  }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 
-    <a href="/gestion/employe/dashboard/" class="btn btn-secondary">Retour</a>
+ <a href="/gestion/employe/dashboard/" class="btn btn-secondary">Retour</a>
+
 </body>
 </html>

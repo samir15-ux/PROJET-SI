@@ -92,7 +92,7 @@
             padding: 18px;
             color: rgb(8, 8, 8);
         }
-         /* Menu déroulant */
+        
          .dropdown {
             position: relative;
             display: inline-block;
@@ -120,13 +120,13 @@
             background-color: #3e4afca4;
         }
 
-        /* Montre le menu au hover */
+        
         .dropdown:hover .dropdown-content {
             display: block;
         }
 
         .dropdown:hover > a {
-            color: #ffffff; /* Met en surbrillance le bouton principal */
+            color: #ffffff; 
         }
     </style>
 </head>
@@ -163,11 +163,11 @@
             <p class="info-item"><strong>Téléphone :</strong> {{ employe.telephone }}</p>
             <p class="info-item"><strong>Département :</strong> {{ employe.departement }}</p>
             <p class="info-item"><strong>Poste :</strong> {{ employe.poste }}</p>
-            <a href="{% url 'modifier_employe' employe.id %}" class="btn">Modifier mes informations</a>
+            <a href="{% url 'modifier_informations' %}" class="btn">Modifier mes informations</a>
         </div>
     </div>
     <footer> 
-        <p>© 2024 Gestion RH. Tous droits réservés.</p>
+        <p>© 2024 Gestion RH. Tous droits réservés.</p> 
     </footer> 
 
     

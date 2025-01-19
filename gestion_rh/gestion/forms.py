@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import  Candidature, Employe, Evaluation,Conge, Contrat, Salaire, Recrutement, SoldeConge
+from .models import  Candidature, Employe, Evaluation,Conges, Contrat, Salaire, Recrutement,  Candidature, Recrutement
+
+
 
 class UserCreationForm (forms.ModelForm):
     password1 = forms.CharField(label='Mot de passe', widget=forms.PasswordInput)
@@ -37,10 +39,7 @@ class EmployeForm(forms.ModelForm):
             raise forms.ValidationError("La date de fin doit être après la date de début.")
         return cleaned_data      
     
-class SoldeCongeForm(forms.ModelForm):
-    class Meta:
-        model = SoldeConge
-        fields = ["solde_annuel", "solde_maladie"]
+
 
 class ContratForm(forms.ModelForm):
     class Meta:
@@ -50,15 +49,12 @@ class ContratForm(forms.ModelForm):
 class SalaireForm(forms.ModelForm):
     class Meta:
         model = Salaire
-        fields = '__all__'
+        fields = ['employe', 'salaire_base', 'primes', 'heures_supplementaires']
 
 class RecrutementForm(forms.ModelForm):
     class Meta:
         model = Recrutement
         fields = '__all__'
-
-from django import forms
-from .models import Candidature, Recrutement
 
 class CandidatureForm(forms.ModelForm):
     class Meta:
@@ -73,22 +69,26 @@ class CandidatureForm(forms.ModelForm):
 
 class CongeForm(forms.ModelForm):
     class Meta:
-        model = Conge
-        fields = ['date_debut', 'date_fin', 'type_conge', 'commentaire']
+        model = Conges
+        fields = ['date_debut', 'date_fin', 'type_conge']
         widgets = {
             'date_debut': forms.DateInput(attrs={'type': 'date'}),
             'date_fin': forms.DateInput(attrs={'type': 'date'}),
-            'commentaire': forms.Textarea(attrs={'rows': 3}),
+            
         }
 
-class congeForm(forms.ModelForm):
+
+class EmployeUpdateForm(forms.ModelForm):
     class Meta:
-        model = Conge
-        fields = ['employe', 'date_debut', 'date_fin', 'type_conge', 'commentaire']
+        model = Employe
+        fields = ['nom', 'prenom', 'email', 'telephone']
         widgets = {
-            'date_debut': forms.DateInput(attrs={'type': 'date'}),
-            'date_fin': forms.DateInput(attrs={'type': 'date'}),
-            'commentaire': forms.Textarea(attrs={'rows': 3}),
+            'nom': forms.TextInput(attrs={'class': 'form-control'}),
+            'prenom': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'telephone': forms.TextInput(attrs={'class': 'form-control'}),
         }
-
-
+class congesForm(forms.ModelForm):
+    class Meta:
+        model = Conges
+        fields = ['employe', 'type_conge', 'date_debut', 'date_fin']

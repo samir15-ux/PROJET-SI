@@ -1,0 +1,99 @@
+
+
+
+
+{% block content %}
+<div class="container">
+    <h2>Modifier mes informations</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </form>
+</div>
+
+<style>
+ 
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px 30px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+
+.container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+form input, 
+form select, 
+form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+
+form .btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+form .btn:hover {
+    background-color: #0056b3;
+}
+
+
+form .errorlist {
+    color: #d9534f;
+    font-size: 14px;
+    margin-top: -10px;
+}
+
+
+@media (max-width: 768px) {
+    .container {
+        padding: 15px 20px;
+    }
+
+    form input,
+    form select,
+    form textarea {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    form .btn {
+        font-size: 14px;
+        padding: 8px 10px;
+    }
+}
+
+</style>
+{% endblock %}

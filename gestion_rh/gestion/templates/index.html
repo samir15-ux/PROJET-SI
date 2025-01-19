@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <title>Gestion RH</title>
     
 </head>
@@ -11,10 +12,10 @@
         <div class="logo">Gestion RH</div>
         <nav>
             <ul>
-                <li><a href="{% url 'index' %}"class="buttonn">Accueil</a></li>
-                <li><a href="{% url 'postuler' %}"class="buttonn">Zone de candidature</a></li>
-                <li><a href="{% url 'register' %}"class="buttonn">S'inscrire</a></li>
-                <li><a href="{% url 'login' %}"class="buttonn">Connexion</a></li>
+                <li><a href="{% url 'index' %}"class="buttonn"><i class="fas fa-home"></i> Accueil</a></li>
+                <li><a href="{% url 'postuler' %}"class="buttonn"><i class="fas fa-clipboard-list"></i> Zone de candidature</a></li>
+                <li><a href="{% url 'register' %}"class="buttonn"><i class="fas fa-user-plus"></i> S'inscrire</a></li>
+                <li><a href="{% url 'login' %}"class="buttonn"><i class="fas fa-sign-in-alt"></i> Connexion</a></li>
             </ul>
         </nav>
     </header>
@@ -40,7 +41,7 @@
 </body>
 </html>
 <style>
-  /* Global styles */
+ 
 body {
     margin: 0;
     font-family: 'Arial', sans-serif;
@@ -48,7 +49,6 @@ body {
     color: #333;
 }
 
-/* Header styles */
 .header {
     background: linear-gradient(205.17deg, #418cd1 10.93%, #9c41d1 116.08%);
     color: white;
@@ -63,7 +63,7 @@ body {
 .header .logo {
     font-size: 24px; 
     font-weight: bold;
-    color: #f4f2f2; /* RHPLUS en rouge */
+    color: #f4f2f2; 
 }
 
 .header nav ul {
@@ -88,7 +88,7 @@ body {
     text-decoration: underline;
 }
 
-/* Main content styles */
+
 .main-content {
     display: flex;
     align-items: center;
@@ -141,7 +141,7 @@ body {
     background-color: #5173b2;
 }
 
-/* Image container */
+
 .image-container {
     max-width: 38.7%;
 }

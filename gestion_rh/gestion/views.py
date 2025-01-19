@@ -5,33 +5,30 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
-
-from .forms import CandidatureForm, CongeForm, ContratForm, EmployeForm, EvaluationForm,  RecrutementForm, SalaireForm, SoldeCongeForm, congeForm
-from .models import Employe, Evaluation, Recrutement, Salaire, Conge, Contrat, SoldeConge
-
-# Create your views here.
+from .forms import CandidatureForm, CongeForm, ContratForm, EmployeForm, EmployeUpdateForm, EvaluationForm,  RecrutementForm, SalaireForm, congesForm
+from .models import Candidature, Conges, Employe, Evaluation, Recrutement, Salaire,  Conges, Contrat, SoldeConge
+from django.db.models import Count, Avg
+from django.contrib import messages
 
 
 def inscription(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
-        code_employe = request.POST.get('code_employe')  # Récupérer le code employé depuis le formulaire
+        code_employe = request.POST.get('code_employe') 
 
         try:
-            # Vérifiez que le code employé existe dans la base de données
+            
             employe = Employe.objects.get(code=code_employe)
         except Employe.DoesNotExist:
-            # Si le code employé est invalide, affichez un message d'erreur
+            
             messages.error(request, "Le code employé est invalide. Veuillez réessayer.")
             return render(request, 'register.html', {'form': form})
         
         if form.is_valid():
-            # Si tout est valide, sauvegardez le nouvel utilisateur
+          
             user = form.save()
             messages.success(request, "Inscription réussie !")
-            return redirect('login')  # Redirige vers la page de connexion
-    
+            return redirect('login')  
     else:
         form = UserCreationForm()
 
@@ -44,21 +41,20 @@ def connexion(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         
-        # Authentifier l'utilisateur
+       
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
             
-            # Redirection basée sur le rôle
-            if user.is_staff:  # Agent RH
-                return redirect('/gestion/dashboard/')  # Redirige vers l'administration Django
-            else:  # Employé
-                return redirect('/gestion/employe/dashboard/')  # Redirige vers le tableau de bord employé
+          
+            if user.is_staff:  
+                return redirect('/gestion/dashboard/') 
+            else: 
+                return redirect('/gestion/employe/dashboard/') 
         else:
-            # Afficher un message d'erreur si les identifiants sont incorrects
+           
             messages.error(request, "Nom d'utilisateur ou mot de passe incorrect.")
     
-    # Afficher la page de connexion
     return render(request, 'login.html')
 
 def logout_view(request):
@@ -76,7 +72,7 @@ def dashboard(request):
 
 def gestion_tables(request):
     employes = Employe.objects.all()
-    conges = Conge.objects.all()
+    conges = Conges.objects.all()
     contrats = Contrat.objects.all()
     
     return render(request, 'gestion_tables.html', {
@@ -88,7 +84,7 @@ def gestion_tables(request):
 def gestion_employes(request):
     search_query = request.GET.get('search', '')
     if search_query:
-        employes = Employe.objects.filter(nom__icontains=search_query)  # Recherche par nom
+        employes = Employe.objects.filter(nom__icontains=search_query) 
     else:
         employes = Employe.objects.all()
 
@@ -130,38 +126,36 @@ def supprimer_employe(request, pk):
 
 def gestion_conges(request):
     search_query = request.GET.get('search', '')
-    conges = Conge.objects.filter(employe__nom__icontains=search_query) if search_query else Conge.objects.all()
+    conges = Conges.objects.filter(employe__nom__icontains=search_query) if search_query else Conges.objects.all()
     return render(request, 'gestion_conges/conge_list.html', {'conges': conges})
+
 
 def ajouter_conge(request):
     if request.method == 'POST':
-        form = congeForm(request.POST)
+        form = congesForm(request.POST)
         if form.is_valid():
             form.save()
-            solde = SoldeConge.objects.get(employe=Conge.employe)
-            solde.deduire_solde(Conge.type_conge, Conge.duree_conge())
             return redirect('gestion_conges')
     else:
-        form = congeForm()
+        form = congesForm()
     return render(request, 'gestion_conges/conge_form.html', {'form': form, 'action': 'Ajouter'})
 
+
 def modifier_conge(request, pk):
-    conge = get_object_or_404(Conge, pk=pk)
+    conge = get_object_or_404(Conges, pk=pk)
     if request.method == 'POST':
-        form = congeForm(request.POST, instance=conge)
+        form = congesForm(request.POST, instance=conge)
         if form.is_valid():
             form.save()
             return redirect('gestion_conges')
     else:
-        form = congeForm(instance=conge)
+        form = congesForm(instance=conge)
     return render(request, 'gestion_conges/conge_form.html', {'form': form, 'action': 'Modifier'})
 
 
 def supprimer_conge(request, pk):
-    conge = get_object_or_404(Conge, pk=pk)
+    conge = get_object_or_404(Conges, pk=pk)
     if request.method == 'POST':
-        solde = SoldeConge.objects.get(employe=conge.employe)
-        solde.ajouter_solde(conge.type_conge, conge.duree_conge())
         conge.delete()
         return redirect('gestion_conges')
     return render(request, 'gestion_conges/conge_confirm_delete.html', {'conge': conge})
@@ -238,9 +232,6 @@ def supprimer_contrat(request, pk):
     return render(request, 'gestion_contrats/contrat_confirm_delete.html', {'contrat': contrat})
 
 
-
-
-
 def gestion_recrutements(request):
     search_query = request.GET.get('search', '')
     recrutements = Recrutement.objects.filter(poste__icontains=search_query) if search_query else Recrutement.objects.all()
@@ -278,7 +269,7 @@ def supprimer_recrutement(request, pk):
 
 
 def Gestion_personnel(request):
-    employes = Employe.objects.all()  # Récupère tous les employés
+    employes = Employe.objects.all() 
     return render(request, 'Gestion_personnel/personnel_list.html', {'employes': employes})
 
 
@@ -302,20 +293,6 @@ def ajouter_evaluation(request, pk):
         form = EvaluationForm()
     return render(request, 'Gestion_personnel/ajouter_evaluation.html', {'form': form, 'employe': employe})
 
-def solde_conge_list(request):
-    soldes = SoldeConge.objects.all()
-    return render(request, "gestion_conges/solde_conge_list.html", {"soldes": soldes})
-
-def solde_conge_update(request, employe_id):
-    solde = get_object_or_404(SoldeConge, employe_id=employe_id)
-    if request.method == "POST":
-        form = SoldeCongeForm(request.POST, instance=solde)
-        if form.is_valid():
-            form.save()
-            return redirect("solde_conge_list")
-    else:
-        form = SoldeCongeForm(instance=solde)
-    return render(request, "gestion_conges/solde_conge_form.html", {"form": form, "solde": solde})
 
 def postuler(request):
     if request.method == 'POST':
@@ -327,40 +304,39 @@ def postuler(request):
         form = CandidatureForm()
     return render(request, 'postuler.html', {'form': form})
 
-from django.contrib import messages
+
+
 
 @login_required
 def employe_dashboard(request):
     try:
-        # Récupérer l'employé associé à l'utilisateur connecté
-        employe = Employe.objects.get(user=request.user)  # L'utilisateur connecté doit avoir une relation avec l'employé
+       
+        employe = Employe.objects.get(user=request.user) 
     except Employe.DoesNotExist:
-        employe = None  # Si aucun employé n'est trouvé, vous pouvez gérer cette situation comme vous voulez
-    
+        employe = None 
     return render(request, 'employe_dashboard.html', {'employe': employe})
 
 def demande_conge(request):
     if not request.user.is_authenticated:
         messages.error(request, "Vous devez être connecté pour soumettre une demande de congé.")
-        return redirect("login")  # Ou une redirection appropriée
-
-    # Vérifier si l'utilisateur a bien un employé associé
+        return redirect("login")  
+  
     if not hasattr(request.user, 'employe') or request.user.employe is None:
         messages.error(request, "Aucun employé associé à votre compte.")
-        return redirect("home")  # Ou une redirection appropriée
+        return redirect("home")  
 
     if request.method == "POST":
         form = CongeForm(request.POST)
         if form.is_valid():
             conge = form.save(commit=False)
-            conge.employe = request.user.employe  # Associer l'employé connecté
+            conge.employe = request.user.employe  
             try:
-                conge.clean()  # Valider les règles métier (dates, solde)
-                conge.save()  # Sauvegarder si tout est valide
+                conge.clean() 
+                conge.save() 
                 messages.success(request, "Votre demande de congé a été soumise avec succès.")
-                return redirect("consulter_conges")  # Rediriger vers la liste des congés
+                return redirect("consulter_conges")  
             except ValidationError as e:
-                form.add_error(None, e)  # Ajouter l'erreur au formulaire
+                form.add_error(None, e)  
         else:
             messages.error(request, "Veuillez corriger les erreurs ci-dessous.")
     else:
@@ -369,6 +345,72 @@ def demande_conge(request):
     return render(request, "gestion_conges/demande_conge.html", {"form": form})
 
 def consulter_conges(request):
-    conges = Conge.objects.filter(employe=request.user.employe).order_by('-date_debut')
+    conges = Conges.objects.filter(employe=request.user.employe).order_by('-date_debut')
     return render(request, "gestion_conges/consulter_conges.html", {"conges": conges})
+
+
+def Gestion_candidature(request):
+    candidatures = Candidature.objects.all() 
+    return render(request, 'gestion_recrutements.html', {'candidatures':candidatures})
+
+
+def update_candidature(request, candidature_id):
+    if request.method == 'POST':
+        candidature = get_object_or_404(Candidature, id=candidature_id)
+        new_etat = request.POST.get('etat')
+        candidature.etat = new_etat
+        candidature.save()
+        messages.success(request, "L'état de la candidature a été mis à jour et un email a été envoyé.")
+        return redirect('Gestion_candidature',)
+    
+    
+@login_required
+def modifier_informations(request):
+    try:
+        employe = request.user.employe  
+    except Employe.DoesNotExist:
+        messages.error(request, "Aucun profil employé associé à cet utilisateur.")
+        return redirect("employe_dashboard")  
+
+    if request.method == "POST":
+        form = EmployeUpdateForm(request.POST, instance=employe)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Vos informations ont été mises à jour avec succès.")
+            return redirect("employe_dashboard")
+    else:
+        form = EmployeUpdateForm(instance=employe)
+
+    return render(request, "modifier_informations.html", {"form": form})
+
+
+
+def changer_statut(request, conge_id):
+    conge = Conges.objects.get(id=conge_id)
+    solde_conge = SoldeConge.objects.get(employe=conge.employe)
+
+
+    if conge.type_conge == 'annuel':
+        solde_conge.solde_utilise_annuel = (conge.date_fin - conge.date_debut).days +2  
+    elif conge.type_conge == 'maladie':
+        solde_conge.solde_utilise_maladie = (conge.date_fin - conge.date_debut).days + 2
+    elif conge.type_conge == 'maternite':
+        solde_conge.solde_utilise_maternite = (conge.date_fin - conge.date_debut).days + 2
+    elif conge.type_conge == 'sans_solde':
+        solde_conge.solde_utilise_sans_solde = (conge.date_fin - conge.date_debut).days + 2
+
+    solde_conge.save()
+    conge.statut = not conge.statut  
+    conge.save()
+    return redirect('gestion_conges') 
+
+
+
+
+
+  
+  
+
+
+
 

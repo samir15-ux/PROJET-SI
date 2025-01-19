@@ -1,4 +1,3 @@
-
 {% block content %}
 <div class="container mt-5">
     <h2>Ajouter une Évaluation pour {{ employe.nom }} {{ employe.prenom }}</h2>
@@ -11,7 +10,7 @@
     </form>
 </div>
 <style>
-    /* Global Settings */
+    
 * {
     margin: 0;
     padding: 0;
@@ -20,46 +19,43 @@
 }
 
 body {
-    background-color: #f7f8fa; /* Fond clair */
+    background-color: #f7f8fa; 
     color: #444;
     font-size: 16px;
     line-height: 1.6;
 }
-
-/* Container */
 .container {
-    max-width: 800px;
-    margin-top: 50px;
-    padding: 30px;
-    background-color: #fff;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
-}
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #fff;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+        }
 
-/* Title */
 h2 {
     font-size: 2rem;
     font-weight: 600;
-    color: #418cd1; /* Bleu clair */
+    color: #418cd1; 
     margin-bottom: 30px;
     text-align: center;
 }
 
-/* Form */
+
 form {
     display: flex;
     flex-direction: column;
     gap: 20px;
 }
 
-/* Button */
+
 .btn {
     font-size: 1.1rem;
     padding: 12px 30px;
     border-radius: 50px;
     transition: background-color 0.3s ease, color 0.3s ease;
     text-align: center;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .btn-primary {
@@ -72,7 +68,7 @@ form {
     background-color: #357ab7;
 }
 
-/* Form Field Styling */
+
 .form-group {
     display: flex;
     flex-direction: column;
@@ -103,7 +99,7 @@ form {
     border-color: #418cd1;
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
     .container {
         margin: 20px;

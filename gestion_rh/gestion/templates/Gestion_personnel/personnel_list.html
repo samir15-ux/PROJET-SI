@@ -1,11 +1,13 @@
+{% extends 'base.html' %}
 
+{% block title %}Gestion du Personnel{% endblock %}
 {% block content %}
 <div class="container mt-5">
     <h2 class="text-center mb-4">Gestion du Personnel</h2>
     <table class="table">
         <thead>
             <tr>
-                <th>Nom</th>
+                <th>Nom</th> 
                 <th>Prénom</th>
                 <th>Date d'embauche</th>
                 <th>Actions</th>
@@ -32,7 +34,7 @@
 </div>
 
 <style>
-    /* Global settings */
+    
 * {
     margin: 0;
     padding: 0;
@@ -41,14 +43,13 @@
 }
 
 body {
-    background-color: #f4f7fc; /* Fond clair */
+    background-color: #f4f7fc;
     color: #333;
     font-size: 16px;
     line-height: 1.6;
     
 }
 
-/* Container */
 .container {
     max-width: 1200px;
     margin-top: 50px;
@@ -62,12 +63,12 @@ body {
 h2 {
     font-size: 2rem;
     font-weight: 600;
-    color: #418cd1; /* Bleu clair pour le titre */
+    color: #418cd1; 
     margin-bottom: 30px;
     text-align: center;
 }
 
-/* Table Styles */
+
 .table {
     width: 100%;
     margin-top: 30px;;
@@ -83,24 +84,24 @@ h2 {
 }
 
 .table th {
-    background: linear-gradient(205.17deg, #418cd1 10.93%, #9c41d1 116.08%); /* Dégradé sur l'entête */
+    background: linear-gradient(205.17deg, #418cd1 10.93%, #9c41d1 116.08%); 
     color: white;
     font-weight: 700;
 }
 
 .table tbody tr:nth-child(odd) {
-    background-color: #f9f9f9; /* Lignes impaires */
+    background-color: #f9f9f9; 
 }
 
 .table tbody tr:nth-child(even) {
-    background-color: #f1f1f1; /* Lignes paires */
+    background-color: #f1f1f1;
 }
 
 .table td {
     color: #555;
 }
 
-/* Button Styles */
+
 .btn {
     font-size: 0.9rem;
     padding: 8px 16px;
@@ -120,7 +121,6 @@ h2 {
     color: white;
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
     .container {
         margin: 20px;
